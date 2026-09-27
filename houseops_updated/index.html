@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>HouseOps — Housekeeping Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Georgian:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- Language switcher -->
+  <div class="language-switcher" aria-label="Language">
+    <button type="button" data-lang="ka">GE</button>
+    <button type="button" data-lang="en" class="active">ENG</button>
+    <button type="button" data-lang="ru">RUS</button>
+  </div>
+
+  <!-- LOGIN -->
+  <section id="loginView" class="login-view">
+    <div class="login-hero">
+      <div class="brand light">
+        <span class="brand-mark" data-icon="sparkles"></span>
+        <div><strong>HouseOps</strong><small data-i18n="operationsControl">Operations Control</small></div>
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow" data-i18n="systemName">HOUSEKEEPING MANAGEMENT SYSTEM</span>
+        <h1 data-i18n="heroTitle">One operational workspace for rooms, people, time and quality.</h1>
+        <p data-i18n="heroText">Demo platform for onboarding, daily assignments, time tracking, issue reporting and supervisor quality control.</p>
+        <div class="hero-stats">
+          <div><b>94%</b><span data-i18n="firstPass">First-pass quality</span></div>
+          <div><b>27m</b><span data-i18n="avgClean">Avg. clean time</span></div>
+          <div><b>7</b><span data-i18n="liveAlerts">Live alerts</span></div>
+        </div>
+      </div>
+      <p class="hero-foot">Demo frontend • HTML / CSS / JavaScript</p>
+    </div>
+    <div class="login-panel">
+      <form id="loginForm" class="login-card" novalidate>
+        <span class="eyebrow dark" data-i18n="demoAccess">DEMO ACCESS</span>
+        <h2 data-i18n="chooseWorkspace">Choose your workspace</h2>
+        <p class="muted" data-i18n="credentialsNote">Credentials are not validated in the demo. Select a role to open the corresponding flow.</p>
+        <label><span data-i18n="email">Email</span><input type="email" value="demo@houseops.local" autocomplete="username"/></label>
+        <label><span data-i18n="password">Password</span><input type="password" value="demo123" autocomplete="current-password"/></label>
+        <div class="role-picker" id="rolePicker">
+          <button type="button" class="role-option active" data-role="admin"><span data-icon="compass"></span><b data-i18n="admin">Admin</b><small data-i18n="adminDesc">Analytics & control</small></button>
+          <button type="button" class="role-option" data-role="supervisor"><span data-icon="check-circle"></span><b data-i18n="supervisor">Supervisor</b><small data-i18n="supervisorDesc">Dispatch & QC</small></button>
+          <button type="button" class="role-option" data-role="housekeeper"><span data-icon="broom"></span><b data-i18n="housekeeper">Housekeeper</b><small data-i18n="housekeeperDesc">Mobile task flow</small></button>
+        </div>
+        <button class="btn primary full" type="submit" data-i18n="openDemo">Open demo workspace</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- DESKTOP -->
+  <section id="desktopApp" class="desktop-app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark" data-icon="sparkles"></span>
+        <div><strong>HouseOps</strong><small id="desktopRoleLabel">Admin Console</small></div>
+      </div>
+      <nav id="desktopNav"></nav>
+      <div class="sidebar-footer">
+        <button id="openMobilePreview" class="side-secondary" data-i18n="previewHousekeeper">Preview Housekeeper</button>
+        <div class="profile">
+          <span class="avatar">SM</span>
+          <div><b>Sophia Miller</b><small id="profileRole">Administrator</small></div>
+        </div>
+      </div>
+    </aside>
+    <main class="desktop-main">
+      <header class="topbar">
+        <div><small class="muted" id="todayLabel"></small><h2 id="pageTitle">Dashboard</h2></div>
+        <div class="top-actions">
+          <button class="icon-button" id="alertsButton" aria-label="Alerts"><span data-icon="bell"></span><span class="badge">7</span></button>
+          <button class="btn primary" id="createTaskButton">+ Create task</button>
+          <button class="btn ghost" id="desktopLogout" data-i18n="logout">Logout</button>
+        </div>
+      </header>
+      <div id="desktopContent"></div>
+    </main>
+  </section>
+
+  <!-- MOBILE -->
+  <section id="mobileApp" class="mobile-app hidden">
+    <header class="mobile-header">
+      <div><small id="shiftLabel">Morning shift · 08:00–16:00</small><h2 id="helloLabel">Hi, Nino 👋</h2></div>
+      <div class="mobile-actions">
+        <button id="mobileAdminBack" class="icon-button hidden" aria-label="Back to desktop"><span data-icon="home"></span></button>
+        <button id="mobileLogout" class="icon-button" aria-label="Logout"><span data-icon="logout"></span></button>
+      </div>
+    </header>
+    <main id="mobileContent" class="mobile-content"></main>
+    <nav class="mobile-nav">
+      <button class="mobile-nav-item active" data-mobile-view="tasks"><span data-icon="grid"></span><span data-mobile-label="tasks">Tasks</span></button>
+      <button class="mobile-nav-item" data-mobile-view="issues"><span data-icon="camera"></span><span data-mobile-label="issues">Issues</span></button>
+      <button class="mobile-nav-item" data-mobile-view="shift"><span data-icon="clock"></span><span data-mobile-label="shift">Shift</span></button>
+      <button class="mobile-nav-item" data-mobile-view="learn"><span data-icon="play-circle"></span><span data-mobile-label="learn">Learn</span></button>
+    </nav>
+  </section>
+
+  <!-- AI ASSISTANT (floating) -->
+  <button id="aiAssistantBtn" class="ai-assistant-btn hidden" aria-label="AI Assistant">
+    <span class="ai-robot">
+      <span class="ai-robot-head">
+        <span class="ai-robot-eye"></span>
+        <span class="ai-robot-eye"></span>
+      </span>
+      <span class="ai-robot-antenna"></span>
+    </span>
+    <span class="ai-pulse"></span>
+  </button>
+
+  <aside id="aiPanel" class="ai-panel hidden" aria-hidden="true">
+    <div class="ai-panel-head">
+      <div class="ai-avatar-small">
+        <span class="ai-robot-eye"></span>
+        <span class="ai-robot-eye"></span>
+      </div>
+      <div>
+        <strong>Housy</strong>
+        <small>AI Operations Assistant</small>
+      </div>
+      <button id="aiPanelClose" class="icon-button" aria-label="Close"><span data-icon="x"></span></button>
+    </div>
+    <div id="aiMessages" class="ai-messages"></div>
+    <div id="aiActions" class="ai-actions"></div>
+  </aside>
+
+  <div id="modalRoot"></div>
+  <script src="app.js"></script>
+</body>
+</html>
